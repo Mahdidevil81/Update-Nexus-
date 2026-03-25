@@ -7,8 +7,9 @@ export default defineConfig(({ mode }) => {
     const apiKey = env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY;
     return {
       server: {
-        port: 3000,
+        port: 5000,
         host: '0.0.0.0',
+        allowedHosts: true,
       },
       plugins: [react()],
       define: {
