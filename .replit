@@ -1,10 +1,13 @@
-modules = ["nodejs-20", "web"]
+debugger.interactive.transport = "
+running 
+pip install
+"modules = ["nodejs-20", "python-3.11", "web"]
 [agent]
 expertMode = true
 
 [nix]
 channel = "stable-25_05"
-packages = ["yakut", "tuxguitar"]
+packages = ["yakut", "tuxguitar", "nmh"]
 
 [workflows]
 runButton = "Project"
