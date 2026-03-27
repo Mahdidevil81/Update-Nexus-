@@ -108,8 +108,8 @@ export const LiveVoiceAssistant: React.FC<LiveVoiceAssistantProps> = ({ isActive
   };
 
   const startSession = async () => {
-    // Attempt to use the default GEMINI_API_KEY for free tier access
-    const apiKey = process.env.GEMINI_API_KEY;
+    const b64 = process.env.GEMINI_API_KEY_B64 || process.env.API_KEY_B64;
+    const apiKey = b64 ? atob(b64) : undefined;
 
     if (!apiKey) {
       setErrorMessage("Nexus Neural Link Key not found. Please ensure the system is properly configured.");
@@ -128,7 +128,7 @@ export const LiveVoiceAssistant: React.FC<LiveVoiceAssistantProps> = ({ isActive
       streamRef.current = await navigator.mediaDevices.getUserMedia({ audio: true });
 
       const sessionPromise = ai.live.connect({
-        model: 'gemini-2.5-flash-native-audio-preview-09-2025',
+        model: 'gemini-2.0-flash-live-001',
         callbacks: {
           onopen: () => {
             setStatus('LISTENING');

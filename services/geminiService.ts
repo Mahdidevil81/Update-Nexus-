@@ -69,7 +69,7 @@ export const generateResponse = async (
       parts.push({ text: finalPrompt });
       
       const response = await ai.models.generateContent({ 
-        model: 'gemini-2.5-flash-image', 
+        model: 'gemini-2.0-flash-preview-image-generation', 
         contents: [{ parts }],
         config: {
           imageConfig: {
@@ -131,7 +131,7 @@ export const generateResponse = async (
     parts.push({ text: prompt || "Reflect on the current state." });
 
     const res = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash',
       contents: [{ role: 'user', parts }],
       config: {
         tools: shouldUseSearch ? [{ googleSearch: {} }] : undefined,
@@ -217,7 +217,7 @@ export const getInspirationPrompts = async (history: AiResponse[], profile: User
 
   try {
     const res = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash',
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
       config: {
         responseMimeType: "application/json",
