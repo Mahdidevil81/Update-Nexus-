@@ -473,25 +473,77 @@ const App: React.FC = () => {
             </div>
           )}
 
-          <div className="flex justify-center gap-3">
-            {[
-              { id: GenerationMode.LIVE, icon: '🎙️' },
-              { id: GenerationMode.AUDIO, icon: '🎵' },
-              { id: GenerationMode.IMAGE, icon: '🖼️' },
-              { id: GenerationMode.TEXT, icon: '💬' }
-            ].map(m => (
-              <button 
-                key={m.id} 
-                onClick={() => m.id === GenerationMode.LIVE ? setShowLive(true) : setMode(m.id as any)} 
-                className={`w-11 h-11 rounded-full flex items-center justify-center transition-all duration-500 border ${
-                  (mode === m.id) 
-                  ? 'bg-blue-600/40 border-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.6)] scale-110' 
-                  : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10'
-                }`}
-              >
-                <span className="text-lg">{m.icon}</span>
-              </button>
-            ))}
+          <div className="flex justify-center gap-2.5">
+            {/* LIVE */}
+            <button
+              onClick={() => setShowLive(true)}
+              className="group flex flex-col items-center gap-1.5 px-4 py-2.5 rounded-2xl border transition-all duration-500 bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/20 hover:scale-105"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className="transition-all duration-300 group-hover:drop-shadow-[0_0_6px_rgba(99,102,241,0.8)]">
+                <circle cx="12" cy="12" r="3" fill="#818cf8"/>
+                <path d="M6.34 6.34a8 8 0 0 0 0 11.32" stroke="#818cf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+                <path d="M17.66 6.34a8 8 0 0 1 0 11.32" stroke="#818cf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+                <path d="M3.51 3.51a12 12 0 0 0 0 16.97" stroke="#818cf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.25"/>
+                <path d="M20.49 3.51a12 12 0 0 1 0 16.97" stroke="#818cf8" strokeWidth="1.5" strokeLinecap="round" opacity="0.25"/>
+                <circle cx="12" cy="12" r="1.5" fill="white" className="animate-ping" style={{transformOrigin:'12px 12px'}}/>
+              </svg>
+              <span className="text-[8px] uppercase tracking-widest text-indigo-400 font-semibold">Live</span>
+            </button>
+
+            {/* AUDIO */}
+            <button
+              onClick={() => setMode(GenerationMode.AUDIO)}
+              className={`group flex flex-col items-center gap-1.5 px-4 py-2.5 rounded-2xl border transition-all duration-500 ${
+                mode === GenerationMode.AUDIO
+                  ? 'bg-fuchsia-600/20 border-fuchsia-500/60 shadow-[0_0_18px_rgba(217,70,239,0.35)] scale-105'
+                  : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/20 hover:scale-105'
+              }`}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className={`transition-all duration-300 ${mode === GenerationMode.AUDIO ? 'drop-shadow-[0_0_6px_rgba(217,70,239,0.9)]' : 'group-hover:drop-shadow-[0_0_6px_rgba(217,70,239,0.6)]'}`}>
+                <rect x="9" y="2" width="6" height="12" rx="3" fill={mode === GenerationMode.AUDIO ? '#e879f9' : '#a855f7'} opacity="0.9"/>
+                <path d="M5 10a7 7 0 0 0 14 0" stroke={mode === GenerationMode.AUDIO ? '#e879f9' : '#a855f7'} strokeWidth="1.5" strokeLinecap="round" opacity="0.7"/>
+                <line x1="12" y1="17" x2="12" y2="21" stroke={mode === GenerationMode.AUDIO ? '#e879f9' : '#a855f7'} strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+                <line x1="9" y1="21" x2="15" y2="21" stroke={mode === GenerationMode.AUDIO ? '#e879f9' : '#a855f7'} strokeWidth="1.5" strokeLinecap="round" opacity="0.6"/>
+                {mode === GenerationMode.AUDIO && <><line x1="2" y1="10" x2="2" y2="14" stroke="#e879f9" strokeWidth="1.5" strokeLinecap="round" opacity="0.4"/><line x1="22" y1="10" x2="22" y2="14" stroke="#e879f9" strokeWidth="1.5" strokeLinecap="round" opacity="0.4"/></>}
+              </svg>
+              <span className={`text-[8px] uppercase tracking-widest font-semibold ${mode === GenerationMode.AUDIO ? 'text-fuchsia-400' : 'text-gray-500'}`}>Audio</span>
+            </button>
+
+            {/* IMAGE */}
+            <button
+              onClick={() => setMode(GenerationMode.IMAGE)}
+              className={`group flex flex-col items-center gap-1.5 px-4 py-2.5 rounded-2xl border transition-all duration-500 ${
+                mode === GenerationMode.IMAGE
+                  ? 'bg-amber-600/20 border-amber-500/60 shadow-[0_0_18px_rgba(245,158,11,0.35)] scale-105'
+                  : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/20 hover:scale-105'
+              }`}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className={`transition-all duration-300 ${mode === GenerationMode.IMAGE ? 'drop-shadow-[0_0_6px_rgba(251,191,36,0.9)]' : 'group-hover:drop-shadow-[0_0_6px_rgba(251,191,36,0.6)]'}`}>
+                <rect x="3" y="3" width="18" height="18" rx="4" stroke={mode === GenerationMode.IMAGE ? '#fbbf24' : '#d97706'} strokeWidth="1.5" opacity="0.8"/>
+                <circle cx="8.5" cy="8.5" r="1.5" fill={mode === GenerationMode.IMAGE ? '#fbbf24' : '#d97706'} opacity="0.9"/>
+                <path d="M3 15l5-5 4 4 3-3 6 6" stroke={mode === GenerationMode.IMAGE ? '#fbbf24' : '#d97706'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.7"/>
+                <path d="M18 6l1 1-1 1-1-1 1-1z" fill={mode === GenerationMode.IMAGE ? '#fbbf24' : '#d97706'} opacity="0.5"/>
+              </svg>
+              <span className={`text-[8px] uppercase tracking-widest font-semibold ${mode === GenerationMode.IMAGE ? 'text-amber-400' : 'text-gray-500'}`}>Image</span>
+            </button>
+
+            {/* TEXT */}
+            <button
+              onClick={() => setMode(GenerationMode.TEXT)}
+              className={`group flex flex-col items-center gap-1.5 px-4 py-2.5 rounded-2xl border transition-all duration-500 ${
+                mode === GenerationMode.TEXT
+                  ? 'bg-cyan-600/20 border-cyan-500/60 shadow-[0_0_18px_rgba(6,182,212,0.35)] scale-105'
+                  : 'bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/20 hover:scale-105'
+              }`}
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" className={`transition-all duration-300 ${mode === GenerationMode.TEXT ? 'drop-shadow-[0_0_6px_rgba(6,182,212,0.9)]' : 'group-hover:drop-shadow-[0_0_6px_rgba(6,182,212,0.6)]'}`}>
+                <path d="M20 2H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h3l3 3 3-3h7a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z" stroke={mode === GenerationMode.TEXT ? '#22d3ee' : '#0891b2'} strokeWidth="1.5" fill={mode === GenerationMode.TEXT ? 'rgba(6,182,212,0.1)' : 'none'} strokeLinejoin="round"/>
+                <line x1="7" y1="8" x2="17" y2="8" stroke={mode === GenerationMode.TEXT ? '#22d3ee' : '#0891b2'} strokeWidth="1.5" strokeLinecap="round" opacity="0.8"/>
+                <line x1="7" y1="12" x2="14" y2="12" stroke={mode === GenerationMode.TEXT ? '#22d3ee' : '#0891b2'} strokeWidth="1.5" strokeLinecap="round" opacity="0.5"/>
+                {mode === GenerationMode.TEXT && <circle cx="17" cy="12" r="1.5" fill="#22d3ee" className="animate-pulse"/>}
+              </svg>
+              <span className={`text-[8px] uppercase tracking-widest font-semibold ${mode === GenerationMode.TEXT ? 'text-cyan-400' : 'text-gray-500'}`}>Text</span>
+            </button>
           </div>
 
           <form onSubmit={send} className="relative bg-white/5 backdrop-blur-[40px] border border-white/10 rounded-[2.5rem] p-2 flex items-center gap-2 focus-within:border-blue-500/50 shadow-2xl neon-border-pulse group">
