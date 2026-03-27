@@ -8,6 +8,7 @@ import ProfileDrawer from './components/ProfileDrawer';
 import SplashScreen from './components/SplashScreen';
 import QuantumBackground from './components/QuantumBackground';
 import { LiveVoiceAssistant } from './components/LiveVoiceAssistant';
+import NexusCompliance from './components/NexusCompliance';
 import { SystemStatus, GenerationMode, AiResponse, Emotion, Attachment, UserProfile, ImageOptions } from './types';
 import { generateResponse, getInspirationPrompts } from './services/geminiService';
 import { audioManager } from './utils/audioManager';
@@ -127,6 +128,7 @@ const App: React.FC = () => {
   const [currentEmotion, setCurrentEmotion] = useState<Emotion>('NEUTRAL');
   const [attachment, setAttachment] = useState<Attachment | undefined>(undefined);
   const [showLive, setShowLive] = useState(false);
+  const [showCompliance, setShowCompliance] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [imageOptions, setImageOptions] = useState<ImageOptions>({
@@ -344,6 +346,48 @@ const App: React.FC = () => {
         profile={userProfile}
         onUpdate={setUserProfile}
       />
+
+      <NexusCompliance
+        isOpen={showCompliance}
+        onClose={() => setShowCompliance(false)}
+      />
+
+      {/* EU Compliance floating badge */}
+      <button
+        onClick={() => setShowCompliance(true)}
+        className="fixed bottom-6 left-4 z-50 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full transition-all duration-300 hover:scale-105 active:scale-95"
+        style={{
+          background: 'rgba(12,10,6,0.9)',
+          border: '1px solid rgba(212,175,55,0.35)',
+          boxShadow: '0 0 12px rgba(212,175,55,0.15)',
+          backdropFilter: 'blur(12px)',
+        }}
+        title="NEXUS 369 — EU Compliance"
+      >
+        <svg viewBox="0 0 100 100" width="16" height="16">
+          <circle cx="50" cy="50" r="48" fill="#003f9b" />
+          {Array.from({ length: 12 }, (_, i) => {
+            const angle = (i / 12) * 2 * Math.PI - Math.PI / 2;
+            const r = 32;
+            const x = 50 + r * Math.cos(angle);
+            const y = 50 + r * Math.sin(angle);
+            return (
+              <polygon
+                key={i}
+                points="0,-5 1.18,-1.62 3.8,-1.62 1.9,0.62 2.35,3.24 0,1.62 -2.35,3.24 -1.9,0.62 -3.8,-1.62 -1.18,-1.62"
+                fill="#FFD700"
+                transform={`translate(${x},${y})`}
+              />
+            );
+          })}
+        </svg>
+        <span
+          className="text-[8px] font-bold tracking-widest uppercase"
+          style={{ color: 'rgba(212,175,55,0.8)' }}
+        >
+          EU
+        </span>
+      </button>
 
       <div className="max-w-4xl mx-auto w-full flex flex-col h-full z-10 px-4 py-4 md:py-6 relative">
         <TerminalHeader 
